@@ -9,14 +9,14 @@ const saltRounds = 10;
 
 /* GET users listing. */
 
-// router.get("/", async function (req, res, next) {
-//   try {
-//     const users = await User.find({});
-//     res.json(users);
-//   } catch (err) {
-//     res.status(500).json({ err });
-//   }
-// });
+router.get("/", async function (req, res, next) {
+  try {
+    const users = await User.find({});
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ err });
+  }
+});
 
 // router.put("/:id", async function (req, res, next) {
 //   try {
@@ -148,8 +148,24 @@ router.get("/destroy", helpers.isLoggedIn, async (req, res) => {
         new: true,
       }
     );
-    
+
     res.json({ logout: true });
+  } catch (err) {
+    res.status(500).json({ err });
+  }
+});
+
+router.get("/token", helpers.isLoggedIn, async function (req, res) {
+  try {
+    console.log(req.body.userToken);
+    const user = await User.findOne({ email: req.body.userToken.email });
+
+    dataUser = {
+      _id: user._id,
+      email:user.email
+    }
+
+    res.json(dataUser);
   } catch (err) {
     res.status(500).json({ err });
   }

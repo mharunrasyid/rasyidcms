@@ -1,17 +1,18 @@
 <template>
   <div>
-    <index />
+    <router-view/>
+    <!-- <img src="./assets/lorem.png" alt="image"> -->
   </div>
 </template>
 
 <script>
-import index from "./views/index.vue";
+// import index from "./views/index.vue";
+// import formLogin from "./views/formLogin.vue";
+// import adminPage from "./views/adminPage.vue";
 
 export default {
   name: "App",
-  components: {
-    index,
-  },
+
 };
 </script>
 

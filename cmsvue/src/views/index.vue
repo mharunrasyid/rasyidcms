@@ -1,31 +1,31 @@
 <template>
-  <div class="container">
+  <div class="container-fluid" style="padding:0;">
     <header>
       <fa icon="bookmark" />
       <div class="title">Welcome to Dashboard</div>
     </header>
     <main>
       <div class="content">
-        <a href="/line" class="item" style="background: #ca5c55">
+        <router-link to="/line" class="item" style="background: #ca5c55">
           <fa icon="signal" />
           <div>Line</div>
-        </a>
-        <a href="/pie" class="item" style="background: #e6af5f">
+        </router-link>
+        <router-link to="/pie" class="item" style="background: #e6af5f">
           <fa icon="chart-pie" />
           <div>Pie</div>
-        </a>
-        <a href="/bar" class="item" style="background: #457ab2">
+        </router-link>
+        <router-link to="/bar" class="item" style="background: #457ab2">
           <fa icon="chart-bar" />
           <div>Bar</div>
-        </a>
-        <a href="/map" class="item" style="background: #74b467">
+        </router-link>
+        <router-link to="/map" class="item" style="background: #74b467">
           <fa icon="globe-americas" />
           <div>Maps</div>
-        </a>
-        <a href="/login" class="item item-admin" style="background: #75beda">
+        </router-link>
+        <router-link to="/login" class="item item-admin" style="background: #75beda">
           <fa icon="user" />
           <div>Admin Panel</div>
-        </a>
+        </router-link>
       </div>
     </main>
   </div>
@@ -49,6 +49,7 @@ header {
   box-sizing: border-box;
   background: #457ab2;
   padding: 7px 15px;
+  align-items: center;
   font-weight: bold;
 }
 
