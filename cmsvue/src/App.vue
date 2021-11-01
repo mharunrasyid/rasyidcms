@@ -6,13 +6,9 @@
 </template>
 
 <script>
-// import index from "./views/index.vue";
-// import formLogin from "./views/formLogin.vue";
-// import adminPage from "./views/adminPage.vue";
 
 export default {
   name: "App",
-
 };
 </script>
 

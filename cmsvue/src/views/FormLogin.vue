@@ -27,7 +27,7 @@
 import { login } from "../api";
 
 export default {
-  name: "formLogin",
+  name: "FormLogin",
   data() {
     return {
       email: "",

@@ -62,7 +62,7 @@
 import { userToken, logoutUser } from "../api";
 
 export default {
-  name: "adminPage",
+  name: "AdminPage",
   data() {
     return {
       emailUser: "",
@@ -101,15 +101,20 @@ export default {
 .active {
   background: #000;
   border-radius: 5px;
+}
+
+.nav-link {
   padding: 10px;
   display: table;
   width: auto;
 }
+
 .card {
   width: 95%;
   max-width: 1000px;
   margin: 30px auto;
 }
+
 .card-header {
   padding: 20px 15px;
   color: black;

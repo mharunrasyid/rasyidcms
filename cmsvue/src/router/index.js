@@ -1,29 +1,35 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import formLogin from '../views/formLogin.vue'
-import formRegister from '../views/formRegister.vue'
-import adminPage from '../views/adminPage.vue'
-import index from '../views/index.vue'
+import FormLogin from '../views/FormLogin.vue'
+import FormRegister from '../views/FormRegister.vue'
+import AdminPage from '../views/AdminPage.vue'
+import DataPage from '../views/addData/DataPage.vue'
+import Index from '../views/Index.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'index',
-    component: index
+    name: 'Index',
+    component: Index
   },
   {
     path: '/home',
-    name: 'adminPage',
-    component: adminPage
+    name: 'AdminPage',
+    component: AdminPage
+  },
+  {
+    path: '/data',
+    name: 'DataPage',
+    component: DataPage
   },
   {
     path: '/login',
-    name: 'formLogin',
-    component: formLogin
+    name: 'FormLogin',
+    component: FormLogin
   },
   {
     path: '/register',
-    name: 'formRegister',
-    component: formRegister
+    name: 'FormRegister',
+    component: FormRegister
   }
 ]
 

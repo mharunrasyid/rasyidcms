@@ -33,7 +33,7 @@
 import { register } from "../api";
 
 export default {
-  name: "formRegister",
+  name: "FormRegister",
   data() {
     return {
       email: "",
@@ -59,7 +59,6 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .container {
   display: flex;
