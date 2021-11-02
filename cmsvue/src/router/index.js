@@ -3,6 +3,9 @@ import FormLogin from '../views/FormLogin.vue'
 import FormRegister from '../views/FormRegister.vue'
 import AdminPage from '../views/AdminPage.vue'
 import DataPage from '../views/addData/DataPage.vue'
+import BarChart from '../views/chart/BarChart.vue'
+import PieChart from '../views/chart/PieChart.vue'
+import test from '../views/test.vue'
 import Index from '../views/Index.vue'
 
 const routes = [
@@ -15,6 +18,11 @@ const routes = [
     path: '/home',
     name: 'AdminPage',
     component: AdminPage
+  },
+  {
+    path: '/test',
+    name: 'test',
+    component: test
   },
   {
     path: '/data',
@@ -30,6 +38,16 @@ const routes = [
     path: '/register',
     name: 'FormRegister',
     component: FormRegister
+  },
+  {
+    path: '/bar',
+    name: 'BarChart',
+    component: BarChart
+  },
+  {
+    path: '/pie',
+    name: 'PieChart',
+    component: PieChart
   }
 ]
 

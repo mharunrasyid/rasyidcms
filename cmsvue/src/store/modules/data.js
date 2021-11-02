@@ -1,9 +1,12 @@
-import { readData, createData,searchData } from "../../api";
+import { readData, createData, searchData, editData, deleteData } from "../../api";
 
 // initial state
 const state = () => ({
     all: [],
-    btnAddToggle: false
+    deleteDataItem: {},
+    btnAddToggle: false,
+    popUpCheck: false,
+    alertCheck: false,
 })
 
 // getters
@@ -21,8 +24,18 @@ const actions = {
             });
     },
     addData({ commit, state }, { letter, frequency }) {
-        createData(localStorage.getItem("token"), letter, frequency).then(() => {
-            commit('setData', [...state.all, { letter, frequency }])
+        createData(localStorage.getItem("token"), letter, frequency).then((res) => {
+            commit('setData', [...state.all, { _id: res.data.data._id, letter, frequency }])
+        })
+    },
+    editDataFunc({ commit }, { idData, letter, frequency }) {
+        editData(localStorage.getItem("token"), idData, letter, frequency).then((res) => {
+            commit('setData', res.data)
+        })
+    },
+    deleteDataFunc({ commit }, idData ) {
+        deleteData(localStorage.getItem("token"), idData).then((res) => {
+            commit('setData', res.data)
         })
     },
     searchingData({ commit }, { letter, frequency }) {
@@ -30,9 +43,18 @@ const actions = {
             commit('setData', res.data)
         })
     },
+    changeDeleteDataItem({ commit }, data) {
+        commit('setDeleteDataItem', data)
+    },
     changeBtnAddToggle({ commit }, toggle) {
         commit('setBtnAddToggle', toggle)
     },
+    changePopUpCheck({ commit }, toggle) {
+        commit('setPopUpCheck', toggle)
+    },
+    changeAlertCheck({ commit }, toggle) {
+        commit('setAlertCheck', toggle)
+    }
 }
 
 // mutations
@@ -40,8 +62,17 @@ const mutations = {
     setData(state, data) {
         state.all = data
     },
+    setDeleteDataItem(state, data) {
+        state.deleteDataItem = data
+    },
     setBtnAddToggle(state, toggle) {
         state.btnAddToggle = toggle
+    },
+    setPopUpCheck(state, toggle) {
+        state.popUpCheck = toggle
+    },
+    setAlertCheck(state, toggle) {
+        state.alertCheck = toggle
     },
 }
 

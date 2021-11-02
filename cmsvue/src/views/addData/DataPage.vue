@@ -41,7 +41,7 @@
     <main>
       <div class="container-add-data">
         <button class="btn-add-data" @click="btnAddToggleFunc(true)">
-          <fa icon="plus" />add
+          <fa icon="plus" style="margin-right: 8px;"/>add
         </button>
         <FormAddData :btnAddToggle="btnAddToggle" />
       </div>
@@ -62,14 +62,29 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Delete Data</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+              @click="popUpCheckFunc(false)"
+            ></button>
           </div>
           <div class="modal-body">
-            <p>Are you sure you want to delete the data ?</p>
+            <p>
+              Are you sure you want to delete the column by id
+              "
+              <b>{{ deleteDataItem.id }}</b>" ?
+            </p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-danger">delete</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+              @click="popUpCheckFunc(false)"
+            >Close</button>
+            <button type="button" class="btn btn-danger" @click="deleteData()">delete</button>
           </div>
         </div>
       </div>
@@ -87,15 +102,12 @@ import { mapState } from "vuex";
 export default {
   name: "DataPage",
   components: { FormAddData, SearchAddData, TableAddData },
-  data() {
-    return {
-      popUpCheck: false,
-      alertCheck: false,
-    };
-  },
   computed: mapState({
     dataItem: (state) => state.data.all,
+    deleteDataItem: (state) => state.data.deleteDataItem,
     btnAddToggle: (state) => state.data.btnAddToggle,
+    popUpCheck: (state) => state.data.popUpCheck,
+    alertCheck: (state) => state.data.alertCheck,
   }),
   mounted() {
     if (!localStorage.getItem("token")) {
@@ -114,8 +126,15 @@ export default {
           return console.log(err);
         });
     },
+    deleteData() {
+      this.$store.dispatch("data/deleteDataFunc", this.deleteDataItem.idData);
+      this.popUpCheckFunc(false)
+    },
     btnAddToggleFunc(toggle) {
       this.$store.dispatch("data/changeBtnAddToggle", toggle);
+    },
+    popUpCheckFunc(toggle) {
+      this.$store.dispatch("data/changePopUpCheck", toggle);
     }
   },
 };

@@ -9,7 +9,12 @@
       </tr>
     </thead>
     <tbody>
-        <TableItemAddData :key="item.id" :item="item" :index="index" v-for="(item, index) in items" />
+      <TableItemAddData
+        :key="item.id"
+        :item="item"
+        :index="index"
+        v-for="(item, index) in items"
+      />
     </tbody>
   </table>
 </template>
@@ -26,6 +31,6 @@ export default {
 
 <style scoped>
 table {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 </style>

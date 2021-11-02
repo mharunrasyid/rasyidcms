@@ -1,46 +1,53 @@
 <template>
   <tr>
-    <!-- <form style="display: block"> -->
     <th>
       <div class="text">{{ index + 1 }}</div>
     </th>
     <td>
       <div v-if="!inputEditCheck" class="text">{{ item.letter }}</div>
-      <input type="text" v-model="letter" v-else />
+      <input type="text" class="inputLetter" :data-idTableData="item._id" v-model="letter" v-else />
     </td>
     <td>
       <div v-if="!inputEditCheck" class="text">{{ item.frequency }}</div>
-      <input type="number" v-model="frequency" step="any" v-else />
+      <input
+        type="number"
+        class="inputFrequency"
+        :data-idTableData="item._id"
+        v-model="frequency"
+        step="any"
+        v-else
+      />
     </td>
     <td>
       <div v-if="!inputEditCheck">
+        <button type="button" class="btn btn-success" @click="inputEditCheck = true">
+          <fa icon="pen" class="icon" />Update
+        </button>
         <button
           type="button"
-          class="btn btn-success"
-          @click="inputEditCheck = true"
+          class="btn btn-danger"
+          :data-idTableData="item._id"
+          @click="popUpCheckFunc(true, $event)"
         >
-          <fa icon="pen" class="icon" />
-          Update
-        </button>
-        <button type="button" class="btn btn-danger" @click="popUpCheck = true">
-          <fa icon="trash-alt" class="icon" />
-          Delete
+          <fa icon="trash-alt" class="icon" />Delete
         </button>
       </div>
-      <button
-        type="button"
-        class="btn btn-secondary"
-        @click="inputEditCheck = true"
-        v-else
-      >
-        Save
-      </button>
+      <div v-else>
+        <button
+          type="button"
+          class="btn btn-primary"
+          :data-idTableData="item._id"
+          @click="editInputData($event)"
+        >Save</button>
+        <button type="button" class="btn btn-secondary" @click="inputEditCheck = false">Cancel</button>
+      </div>
     </td>
-    <!-- </form> -->
   </tr>
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "TableItemAddData",
   props: ["item", "index"],
@@ -50,6 +57,45 @@ export default {
       letter: this.item.letter,
       frequency: this.item.frequency,
     };
+  },
+  computed: mapState({
+    alertCheck: (state) => state.data.alertCheck,
+  }),
+  methods: {
+    editInputData(event) {
+      let inputLetter = document.querySelector(".inputLetter")
+      let inputFrequency = document.querySelector(".inputFrequency")
+
+      if (!inputLetter.value && !inputFrequency.value) {
+        this.alertCheckFunc(true)
+        this.inputEditCheck = true;
+        inputLetter.classList.add("danger-input");
+        inputFrequency.classList.add("danger-input");
+      } else if (!inputLetter.value) {
+        this.alertCheckFunc(true)
+        this.inputEditCheck = true;
+        inputLetter.classList.add("danger-input");
+        inputFrequency.classList.remove("danger-input");
+      } else if (!inputFrequency.value) {
+        this.alertCheckFunc(true)
+        this.inputEditCheck = true;
+        inputLetter.classList.remove("danger-input");
+        inputFrequency.classList.add("danger-input");
+      } else {
+        this.alertCheckFunc(false)
+        this.$store.dispatch("data/editDataFunc", { idData: event.target.getAttribute('data-idTableData'), letter: inputLetter.value, frequency: Number(inputFrequency.value) });
+        inputLetter.classList.remove("danger-input");
+        inputFrequency.classList.remove("danger-input");
+        this.inputEditCheck = false;
+      }
+    },
+    alertCheckFunc(toggle) {
+      this.$store.dispatch("data/changeAlertCheck", toggle);
+    },
+    popUpCheckFunc(toggle, event) {
+      this.$store.dispatch("data/changeDeleteDataItem", { id: this.index + 1, idData: event.target.getAttribute('data-idTableData') });
+      this.$store.dispatch("data/changePopUpCheck", toggle);
+    }
   },
 };
 </script>
@@ -67,7 +113,6 @@ button .icon {
 td .text,
 th .text {
   margin-top: 6px;
-  /* background: red; */
 }
 
 th {
@@ -76,7 +121,6 @@ th {
 
 td {
   width: 100px;
-    /* background: #000; */
 }
 
 td input {
@@ -89,5 +133,9 @@ td input {
     rgb(209, 213, 219) 0px 0px 0px 1px inset;
   padding: 6px 15px;
   border-radius: 5px;
+}
+
+.danger-input {
+  border: 2px solid rgb(245, 126, 126);
 }
 </style>

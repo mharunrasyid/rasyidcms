@@ -157,7 +157,6 @@ router.get("/destroy", helpers.isLoggedIn, async (req, res) => {
 
 router.get("/token", helpers.isLoggedIn, async function (req, res) {
   try {
-    console.log(req.body.userToken);
     const user = await User.findOne({ email: req.body.userToken.email });
 
     dataUser = {

@@ -30,7 +30,6 @@ router.get("/", helpers.isLoggedIn, async function (req, res, next) {
 
 router.post("/", helpers.isLoggedIn, async function (req, res, next) {
   try {
-    console.log(req.body.letter);
     const datadate = await DataDate.create(req.body);
     if (!datadate) return res.json({ data: "data not added" });
 

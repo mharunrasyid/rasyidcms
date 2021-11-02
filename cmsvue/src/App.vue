@@ -1,7 +1,6 @@
 <template>
   <div>
     <router-view/>
-    <!-- <img src="./assets/lorem.png" alt="image"> -->
   </div>
 </template>
 

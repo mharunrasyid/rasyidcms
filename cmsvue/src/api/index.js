@@ -27,7 +27,7 @@ export const readData = async (token) => {
 }
 
 export const createData = async (token, letter, frequency) => {
-    await request.post("data", { letter, frequency }, { headers: { "Authorization": `Bearer ${token}` } })
+    return await request.post("data", { letter, frequency }, { headers: { "Authorization": `Bearer ${token}` } })
 }
 
 export const searchData = async (token, letter, frequency) => {
@@ -43,3 +43,13 @@ export const searchData = async (token, letter, frequency) => {
     }
     return await request.post("data/search", data, { headers: { "Authorization": `Bearer ${token}` } })
 }
+ 
+export const editData = async (token, idData, letter, frequency) => {
+    await request.put(`data/${idData}`, { letter, frequency }, { headers: { "Authorization": `Bearer ${token}` } })
+    return await request.get("data", { headers: { "Authorization": `Bearer ${token}` } })
+}
+
+export const deleteData = async (token, idData) => {
+    await request.delete(`data/${idData}`, { headers: { "Authorization": `Bearer ${token}` } })
+    return await request.get("data", { headers: { "Authorization": `Bearer ${token}` } })
+} 
