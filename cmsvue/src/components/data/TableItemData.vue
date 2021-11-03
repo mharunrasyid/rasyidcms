@@ -69,24 +69,24 @@ export default {
 
       this.alertEditData(true)
       this.inputEditCheck = true;
-      if (!inputLetter.value && !inputFrequency.value) {
-        inputLetter.classList.add("danger-input");
-        inputFrequency.classList.add("danger-input");
-      } else if (!inputLetter.value) {
-        inputLetter.classList.add("danger-input");
-        inputFrequency.classList.remove("danger-input");
-      } else if (!inputFrequency.value) {
-        inputLetter.classList.remove("danger-input");
-        inputFrequency.classList.add("danger-input");
-      } else {
+
+      let inputEditData = document.querySelectorAll("td input")
+
+      inputEditData.forEach(m => {
+        if (m.value == "") {
+          m.classList.add("danger-input");
+        } else {
+          m.classList.remove("danger-input");
+        }
+      })
+
+      if (inputLetter.value != "" && inputFrequency.value != "") {
         setTimeout(() => {
           this.alertEditData(false)
         }, 1500);
         this.inputEditCheck = false;
         this.$store.dispatch("data/alertDataFunc", { class: "alert-primary", text: "Data Updated" });
         this.$store.dispatch("data/editDataFunc", { idData: event.target.getAttribute('data-idTableData'), letter: inputLetter.value, frequency: Number(inputFrequency.value) });
-        inputLetter.classList.remove("danger-input");
-        inputFrequency.classList.remove("danger-input");
       }
     },
     cancelEdit() {

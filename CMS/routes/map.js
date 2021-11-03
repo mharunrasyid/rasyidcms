@@ -8,7 +8,7 @@ const helpers = require("../helpers/util");
 
 router.post("/search", helpers.isLoggedIn, async function (req, res, next) {
   try {
-    const map = await Map.find(req.body);
+    const map = await Map.find({title: { $regex: '.*' + req.body.title + '.*' } });
     if (!map) return res.json({ data: "not found" });
 
     res.json(map);

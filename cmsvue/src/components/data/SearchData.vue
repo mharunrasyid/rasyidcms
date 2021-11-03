@@ -5,19 +5,19 @@
     v-on:submit.prevent="searchData"
   >
     <div class="container-input-add-data">
-      <label for="letter-seacrh-input">Letter</label>
+      <label for="letter-search-input">Letter</label>
       <input
         type="text"
-        id="letter-seacrh-input"
+        id="letter-search-input"
         placeholder="A"
         v-model="letter"
       />
     </div>
     <div class="container-input-add-data">
-      <label for="frequency-seacrh-input">Frequency</label>
+      <label for="frequency-search-input">Frequency</label>
       <input
         type="number"
-        id="frequency-seacrh-input"
+        id="frequency-search-input"
         placeholder="0.0000"
         step="any"
         v-model="frequency"

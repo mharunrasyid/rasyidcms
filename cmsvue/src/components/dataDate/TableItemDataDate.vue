@@ -75,24 +75,24 @@ export default {
 
       this.alertEditDataDate(true)
       this.inputEditCheck = true;
-      if (!inputLetter.value && !inputFrequency.value) {
-        inputLetter.classList.add("danger-input");
-        inputFrequency.classList.add("danger-input");
-      } else if (!inputLetter.value) {
-        inputLetter.classList.add("danger-input");
-        inputFrequency.classList.remove("danger-input");
-      } else if (!inputFrequency.value) {
-        inputLetter.classList.remove("danger-input");
-        inputFrequency.classList.add("danger-input");
-      } else {
+
+      let inputEditDataDate = document.querySelectorAll("td input")
+
+      inputEditDataDate.forEach(m => {
+        if (m.value == "") {
+          m.classList.add("danger-input");
+        } else {
+          m.classList.remove("danger-input");
+        }
+      })
+
+      if (inputLetter.value != "" && inputFrequency.value != "") {
         setTimeout(() => {
           this.alertEditDataDate(false)
         }, 1500);
         this.inputEditCheck = false;
         this.$store.dispatch("dataDate/alertDataDateFunc", { class: "alert-primary", text: "Data Updated" });
         this.$store.dispatch("dataDate/editDataDateFunc", { idDataDate: event.target.getAttribute('data-idTableDataDate'), letter: inputLetter.value, frequency: Number(inputFrequency.value) });
-        inputLetter.classList.remove("danger-input");
-        inputFrequency.classList.remove("danger-input");
       }
     },
     cancelEdit() {

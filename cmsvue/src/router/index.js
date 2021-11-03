@@ -6,6 +6,7 @@ import test from '../views/test.vue'
 import Index from '../views/Index.vue'
 import DataPage from '../views/data/DataPage.vue'
 import DataDatePage from '../views/dataDate/DataDatePage.vue'
+import MapPage from '../views/map/MapPage.vue'
 import BarChart from '../views/chart/BarChart.vue'
 import PieChart from '../views/chart/PieChart.vue'
 import LineChart from '../views/chart/LineChart.vue'
@@ -45,6 +46,11 @@ const routes = [
     path: '/dataDate',
     name: 'DataDatePage',
     component: DataDatePage
+  },
+  {
+    path: '/maps',
+    name: 'MapPage',
+    component: MapPage
   },
   {
     path: '/bar',

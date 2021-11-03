@@ -1,6 +1,6 @@
 const fs = require('fs');
 const mongoose = require('mongoose');
-var DataDate = require("../model/datadate");
+var DataDate = require("../../model/datadate");
 let data = JSON.parse(fs.readFileSync('data.json'));
 
 async function main() {
