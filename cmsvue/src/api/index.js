@@ -53,3 +53,35 @@ export const deleteData = async (token, idData) => {
     await request.delete(`data/${idData}`, { headers: { "Authorization": `Bearer ${token}` } })
     return await request.get("data", { headers: { "Authorization": `Bearer ${token}` } })
 } 
+
+export const readDataDate = async (token) => {
+    return await request.get("datadate", { headers: { "Authorization": `Bearer ${token}` } })
+}
+
+export const createDataDate = async (token, letter, frequency) => {
+    return await request.post("datadate", { letter, frequency }, { headers: { "Authorization": `Bearer ${token}` } })
+}
+
+export const searchDataDate = async (token, letter, frequency) => {
+    let data;
+    if (!letter && !frequency) {
+        data = {}
+    } else if (!letter) {
+        data = { frequency }
+    } else if (!frequency) {
+        data = { letter }
+    } else {
+        data = { letter, frequency }
+    }
+    return await request.post("datadate/search", data, { headers: { "Authorization": `Bearer ${token}` } })
+}
+ 
+export const editDataDate = async (token, idData, letter, frequency) => {
+    await request.put(`datadate/${idData}`, { letter, frequency }, { headers: { "Authorization": `Bearer ${token}` } })
+    return await request.get("datadate", { headers: { "Authorization": `Bearer ${token}` } })
+}
+
+export const deleteDataDate = async (token, idData) => {
+    await request.delete(`datadate/${idData}`, { headers: { "Authorization": `Bearer ${token}` } })
+    return await request.get("datadate", { headers: { "Authorization": `Bearer ${token}` } })
+} 

@@ -1,7 +1,7 @@
 <template>
     <div>
-        <h1>Data Pie Chart</h1>
-        <canvas id="pieChart"></canvas>
+        <h1>Data Date Line Chart</h1>
+        <canvas id="lineChart"></canvas>
     </div>
 </template>
 
@@ -10,9 +10,9 @@ import Chart from 'chart.js/auto';
 import { mapState } from "vuex";
 
 export default {
-    name: 'BarChart',
+    name: 'LineChart',
     computed: mapState({
-        dataItem: (state) => state.data.all,
+        dataItem: (state) => state.dataDate.all,
     }),
     watch: {
         dataItem: function (dataItem) {
@@ -31,10 +31,12 @@ export default {
                 return map;
             }
 
-            const grouped = groupBy(data, item => item.letter);
+            const grouped = groupBy(data, item => {
+                return item.letter.split("-").shift()
+            });
 
             let dataLength = data.map((m) => {
-                return m.letter
+                return m.letter.split("-").shift()
             })
 
             let frequencyData = []
@@ -44,7 +46,7 @@ export default {
                     return item;
             });
 
-            filteredDataLength.sort((a, b) => a.localeCompare(b)).forEach(item => {
+            filteredDataLength.sort().forEach(item => {
                 frequencyData.push(grouped.get(item));
             });
 
@@ -56,7 +58,7 @@ export default {
 
             frequencyData.forEach((m) => {
                 return m.forEach(item => {
-                    letterData.push(item.letter)
+                    letterData.push(item.letter.split("-").shift())
                 })
             })
 
@@ -65,39 +67,28 @@ export default {
                     return item;
             });
 
-            let backgroundChart = [
-                "#98ACC4",
-                "#8A89A5",
-                "#7B6887",
-                "#6A496A",
-                "#AAAE88",
-                "#DFA17C",
-                "#9AC6B8",
-                "#43333F",
-                "#C98A7F",
-                "#7A927F",
-                "#9E8688",
-                "#999DA0",
-            ]
-
             var dataItemObj = {
                 labels: filteredLetterData,
                 datasets: [
                     {
+                        label: 'Data Date Line Chart',
                         data: filteredFrequencyData,
-                        backgroundColor: backgroundChart
+                        fill: false,
+                        borderColor: 'rgb(70,130,180)',
+                        backgroundColor: 'rgb(70,130,180)',
+                        tension: 0.1
                     }]
             };
 
-            const ctx = document.getElementById('pieChart');
+            const ctx = document.getElementById('lineChart');
             new Chart(ctx, {
-                type: 'pie',
+                type: 'line',
                 data: dataItemObj,
             });
         }
     },
     mounted() {
-        this.$store.dispatch("data/getData");
+        this.$store.dispatch("dataDate/getDataDate");
     }
 }
 </script>
@@ -110,8 +101,8 @@ h1 {
     margin-top: 50px;
 }
 
-#pieChart {
-    width: 600px;
+#lineChart {
+    width: 900px;
     margin: 40px auto;
 }
 </style>

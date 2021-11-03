@@ -9,7 +9,7 @@
       </tr>
     </thead>
     <tbody>
-      <TableItemAddData
+      <TableItemData
         :key="item.id"
         :item="item"
         :index="index"
@@ -20,12 +20,12 @@
 </template>
 
 <script>
-import TableItemAddData from "../../components/addData/TableItemAddData.vue";
+import TableItemData from "../../components/data/TableItemData.vue";
 
 export default {
-  name: "TableAddData",
+  name: "TableData",
   props: ["items"],
-  components: { TableItemAddData },
+  components: { TableItemData },
 };
 </script>
 

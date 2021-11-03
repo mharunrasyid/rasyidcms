@@ -1,18 +1,12 @@
 <template>
   <div class="card" :class="{ 'card-active': btnAddToggle }">
     <div class="card-header">
-      <form action="" class="form-add-data" v-on:submit.prevent="addData">
-        <div class="container-input-add-data">
+      <form action class="form-add-data-date" v-on:submit.prevent="addData">
+        <div class="container-input-add-data-date">
           <label for="letter-add-input">Letter</label>
-          <input
-            type="text"
-            id="letter-add-input"
-            v-model="letter"
-            placeholder="A"
-            required
-          />
+          <input type="date" id="letter-add-input" v-model="letter" required />
         </div>
-        <div class="container-input-add-data">
+        <div class="container-input-add-data-date">
           <label for="frequency-add-input">Frequency</label>
           <input
             type="number"
@@ -31,7 +25,7 @@
 
 <script>
 export default {
-  name: "FormAddData",
+  name: "FormAddDataDate",
   props: ["btnAddToggle"],
   data() {
     return {
@@ -41,13 +35,21 @@ export default {
   },
   methods: {
     addData() {
-      this.$store.dispatch("data/addData",{ letter:this.letter, frequency:this.frequency});
+      this.alertAddDataDate(true);
+      setTimeout(() => {
+        this.alertAddDataDate(false);
+      }, 1500);
+      this.$store.dispatch("dataDate/alertDataDateFunc", { class: "alert-primary", text: "Data Added" });
+      this.$store.dispatch("dataDate/addDataDate", { letter: this.letter, frequency: this.frequency });
       this.letter = "";
       this.frequency = "";
       this.btnAddToggleFunc(false)
     },
+    alertAddDataDate(toggle) {
+      this.$store.dispatch("dataDate/changeAlertCheck", toggle);
+    },
     btnAddToggleFunc(toggle) {
-      this.$store.dispatch("data/changeBtnAddToggle", toggle);
+      this.$store.dispatch("dataDate/changeBtnAddToggle", toggle);
     }
   },
 };
@@ -62,21 +64,21 @@ export default {
   padding: 18px 20px;
 }
 
-.form-add-data {
+.form-add-data-date {
   display: flex;
   align-items: center;
 }
 
-.container-input-add-data label,
-.container-input-add-data input {
+.container-input-add-data-date label,
+.container-input-add-data-date input {
   margin-right: 15px;
 }
 
-.container-input-add-data label {
+.container-input-add-data-date label {
   font-weight: bold;
 }
 
-.container-input-add-data input {
+.container-input-add-data-date input {
   border: none;
   outline: none;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
@@ -85,7 +87,7 @@ export default {
   border-radius: 5px;
 }
 
-.form-add-data button {
+.form-add-data-date button {
   border: none;
   outline: none;
   padding: 7px 12px;

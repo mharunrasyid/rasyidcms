@@ -20,10 +20,10 @@
               <router-link class="nav-link" aria-current="page" to="/home">Home</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link active" to="/data">Data</router-link>
+              <router-link class="nav-link" to="/data">Data</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/dataDate">Data Date</router-link>
+              <router-link class="nav-link active" to="/dataDate">Data Date</router-link>
             </li>
             <li class="nav-item">
               <router-link class="nav-link" to="/maps">Maps</router-link>
@@ -39,29 +39,34 @@
       </div>
     </nav>
     <main>
-      <div class="container-add-data">
-        <button class="btn-add-data" @click="btnAddToggleFunc(true)">
-          <fa icon="plus" style="margin-right: 8px;"/>add
+      <div
+        class="alert"
+        :class="{ [`${alertDataDate.class}`]: alertCheck }"
+        role="alert"
+        v-if="alertCheck"
+      >{{ alertDataDate.text }}</div>
+      <div class="container-add-data-date">
+        <button class="btn-add-data-date" @click="btnAddToggleFunc(true)">
+          <fa icon="plus" style="margin-right: 8px;" />add
         </button>
-        <FormAddData :btnAddToggle="btnAddToggle" />
+        <FormAddDataDate :btnAddToggle="btnAddToggle" />
       </div>
-      <div class="container-seach-data">
-        <div class="header-search-data">
+      <div class="container-seach-data-date">
+        <div class="header-search-data-date">
           <div>Search</div>
           <hr />
         </div>
-        <SearchAddData />
+        <SearchDataDate />
       </div>
-      <div class="container-table-data">
-        <TableAddData :items="dataItem" />
+      <div class="container-table-data-date">
+        <TableDataDate :items="dataDateItem" />
       </div>
-      <div class="alert alert-danger" role="alert" v-if="alertCheck">Input tidak boleh kosong !</div>
     </main>
     <div class="modal" tabindex="-1" v-if="popUpCheck">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Delete Data</h5>
+            <h5 class="modal-title">Delete Data Date</h5>
             <button
               type="button"
               class="btn-close"
@@ -74,7 +79,7 @@
             <p>
               Are you sure you want to delete the column by id
               "
-              <b>{{ deleteDataItem.id }}</b>" ?
+              <b>{{ deleteDataDateItem.id }}</b>" ?
             </p>
           </div>
           <div class="modal-footer">
@@ -84,7 +89,7 @@
               data-bs-dismiss="modal"
               @click="popUpCheckFunc(false)"
             >Close</button>
-            <button type="button" class="btn btn-danger" @click="deleteData()">delete</button>
+            <button type="button" class="btn btn-danger" @click="deleteDataDate()">delete</button>
           </div>
         </div>
       </div>
@@ -94,26 +99,27 @@
 
 <script>
 import { logoutUser } from "../../api";
-import FormAddData from "../../components/addData/FormAddData.vue";
-import SearchAddData from "../../components/addData/SearchAddData.vue";
-import TableAddData from "./TableAddData.vue";
+import FormAddDataDate from "../../components/dataDate/FormAddDataDate.vue";
+import SearchDataDate from "../../components/dataDate/SearchDataDate.vue";
+import TableDataDate from "./TableDataDate.vue";
 import { mapState } from "vuex";
 
 export default {
-  name: "DataPage",
-  components: { FormAddData, SearchAddData, TableAddData },
+  name: "DataDatePage",
+  components: { FormAddDataDate, SearchDataDate, TableDataDate },
   computed: mapState({
-    dataItem: (state) => state.data.all,
-    deleteDataItem: (state) => state.data.deleteDataItem,
-    btnAddToggle: (state) => state.data.btnAddToggle,
-    popUpCheck: (state) => state.data.popUpCheck,
-    alertCheck: (state) => state.data.alertCheck,
+    dataDateItem: (state) => state.dataDate.all,
+    deleteDataDateItem: (state) => state.dataDate.deleteDataDateItem,
+    alertDataDate: (state) => state.dataDate.alertDataDate,
+    btnAddToggle: (state) => state.dataDate.btnAddToggle,
+    popUpCheck: (state) => state.dataDate.popUpCheck,
+    alertCheck: (state) => state.dataDate.alertCheck,
   }),
   mounted() {
     if (!localStorage.getItem("token")) {
       return this.$router.push("login");
     }
-    this.$store.dispatch("data/getData");
+    this.$store.dispatch("dataDate/getDataDate");
   },
   methods: {
     logout() {
@@ -126,15 +132,23 @@ export default {
           return console.log(err);
         });
     },
-    deleteData() {
-      this.$store.dispatch("data/deleteDataFunc", this.deleteDataItem.idData);
-      this.popUpCheckFunc(false)
+    deleteDataDate() {
+      this.alertDeleteDataDate(true);
+      setTimeout(() => {
+        this.alertDeleteDataDate(false);
+      }, 1500);
+      this.$store.dispatch("dataDate/alertDataDateFunc", { class: "alert-primary", text: "Data Deleted" });
+      this.$store.dispatch("dataDate/deleteDataDateFunc", this.deleteDataDateItem.idDataDate);
+      this.popUpCheckFunc(false);
+    },
+    alertDeleteDataDate(toggle) {
+      this.$store.dispatch("dataDate/changeAlertCheck", toggle);
     },
     btnAddToggleFunc(toggle) {
-      this.$store.dispatch("data/changeBtnAddToggle", toggle);
+      this.$store.dispatch("dataDate/changeBtnAddToggle", toggle);
     },
     popUpCheckFunc(toggle) {
-      this.$store.dispatch("data/changePopUpCheck", toggle);
+      this.$store.dispatch("dataDate/changePopUpCheck", toggle);
     }
   },
 };
@@ -160,7 +174,7 @@ main {
   margin: 40px auto;
 }
 
-.btn-add-data {
+.btn-add-data-date {
   border: none;
   outline: none;
   padding: 7px 12px;
@@ -170,11 +184,11 @@ main {
   margin-bottom: 20px;
 }
 
-.header-search-data div {
+.header-search-data-date div {
   font-size: 30px;
 }
 
-.header-search-data hr {
+.header-search-data-date hr {
   margin-top: 0;
 }
 
@@ -193,8 +207,6 @@ main {
 }
 
 .alert {
-  position: absolute;
-  top: -15px;
-  right: 0;
+  width: 100%;
 }
 </style>

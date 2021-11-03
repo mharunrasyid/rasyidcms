@@ -39,7 +39,7 @@
           :data-idTableData="item._id"
           @click="editInputData($event)"
         >Save</button>
-        <button type="button" class="btn btn-secondary" @click="inputEditCheck = false">Cancel</button>
+        <button type="button" class="btn btn-secondary" @click="cancelEdit">Cancel</button>
       </div>
     </td>
   </tr>
@@ -49,7 +49,7 @@
 import { mapState } from "vuex";
 
 export default {
-  name: "TableItemAddData",
+  name: "TableItemData",
   props: ["item", "index"],
   data() {
     return {
@@ -65,31 +65,37 @@ export default {
     editInputData(event) {
       let inputLetter = document.querySelector(".inputLetter")
       let inputFrequency = document.querySelector(".inputFrequency")
+      this.$store.dispatch("data/alertDataFunc", { class: "alert-danger", text: "Input Cannot Be Empty !" });
 
+      this.alertEditData(true)
+      this.inputEditCheck = true;
       if (!inputLetter.value && !inputFrequency.value) {
-        this.alertCheckFunc(true)
-        this.inputEditCheck = true;
         inputLetter.classList.add("danger-input");
         inputFrequency.classList.add("danger-input");
       } else if (!inputLetter.value) {
-        this.alertCheckFunc(true)
-        this.inputEditCheck = true;
         inputLetter.classList.add("danger-input");
         inputFrequency.classList.remove("danger-input");
       } else if (!inputFrequency.value) {
-        this.alertCheckFunc(true)
-        this.inputEditCheck = true;
         inputLetter.classList.remove("danger-input");
         inputFrequency.classList.add("danger-input");
       } else {
-        this.alertCheckFunc(false)
+        setTimeout(() => {
+          this.alertEditData(false)
+        }, 1500);
+        this.inputEditCheck = false;
+        this.$store.dispatch("data/alertDataFunc", { class: "alert-primary", text: "Data Updated" });
         this.$store.dispatch("data/editDataFunc", { idData: event.target.getAttribute('data-idTableData'), letter: inputLetter.value, frequency: Number(inputFrequency.value) });
         inputLetter.classList.remove("danger-input");
         inputFrequency.classList.remove("danger-input");
-        this.inputEditCheck = false;
       }
     },
-    alertCheckFunc(toggle) {
+    cancelEdit() {
+      this.inputEditCheck = false;
+      this.alertEditData(false)
+      this.letter = this.item.letter
+      this.frequency = this.item.frequency
+    },
+    alertEditData(toggle) {
       this.$store.dispatch("data/changeAlertCheck", toggle);
     },
     popUpCheckFunc(toggle, event) {
@@ -137,5 +143,6 @@ td input {
 
 .danger-input {
   border: 2px solid rgb(245, 126, 126);
+  background: rgb(246, 215, 218);
 }
 </style>

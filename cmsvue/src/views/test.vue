@@ -1,11 +1,8 @@
 <template>
-    <div style="padding: 5rem;">
-        <button @click="a++">A</button>
-        <button @click="b++">B</button>
-        <p>{{ a }}</p>
-        <p>{{ b }}</p>
-        <p>{{ c }}</p>
-    </div>
+    <form action="" v-on:submit.prevent="submit">
+        <input type="date" class="input">
+        <input type="submit" value="Subimt">
+    </form>
 </template>
 
 <script>
@@ -18,6 +15,14 @@ export default {
     computed: {
         c() {
             return this.a + this.b
+        }
+    },
+    methods:{
+        submit(){
+            let date = ["2004", "2022", "2003", "2001", "2023", "2015", "2012", "2021"]
+
+            console.log(date.sort());
+            console.log(document.querySelector(".input").value);
         }
     }
 }

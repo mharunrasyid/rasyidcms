@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h1>Data Bar Chart</h1>
         <canvas id="barChart"></canvas>
     </div>
 </template>
@@ -88,8 +89,15 @@ export default {
 </script>
 
 <style scoped>
+h1 {
+    color: rgb(126, 125, 125);
+    text-align: center;
+    font-weight: bold;
+    margin-top: 50px;
+}
+
 #barChart {
     width: 900px;
-    margin: 100px auto;
+    margin: 40px auto;
 }
 </style>

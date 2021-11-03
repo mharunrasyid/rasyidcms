@@ -4,6 +4,7 @@ import { readData, createData, searchData, editData, deleteData } from "../../ap
 const state = () => ({
     all: [],
     deleteDataItem: {},
+    alertData: {},
     btnAddToggle: false,
     popUpCheck: false,
     alertCheck: false,
@@ -43,6 +44,9 @@ const actions = {
             commit('setData', res.data)
         })
     },
+    alertDataFunc({ commit }, data) {
+        commit('setAlertData', data)
+    },
     changeDeleteDataItem({ commit }, data) {
         commit('setDeleteDataItem', data)
     },
@@ -61,6 +65,9 @@ const actions = {
 const mutations = {
     setData(state, data) {
         state.all = data
+    },
+    setAlertData(state, data) {
+        state.alertData = data
     },
     setDeleteDataItem(state, data) {
         state.deleteDataItem = data

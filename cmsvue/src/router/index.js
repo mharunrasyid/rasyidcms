@@ -2,11 +2,13 @@ import { createRouter, createWebHistory } from 'vue-router'
 import FormLogin from '../views/FormLogin.vue'
 import FormRegister from '../views/FormRegister.vue'
 import AdminPage from '../views/AdminPage.vue'
-import DataPage from '../views/addData/DataPage.vue'
-import BarChart from '../views/chart/BarChart.vue'
-import PieChart from '../views/chart/PieChart.vue'
 import test from '../views/test.vue'
 import Index from '../views/Index.vue'
+import DataPage from '../views/data/DataPage.vue'
+import DataDatePage from '../views/dataDate/DataDatePage.vue'
+import BarChart from '../views/chart/BarChart.vue'
+import PieChart from '../views/chart/PieChart.vue'
+import LineChart from '../views/chart/LineChart.vue'
 
 const routes = [
   {
@@ -25,11 +27,6 @@ const routes = [
     component: test
   },
   {
-    path: '/data',
-    name: 'DataPage',
-    component: DataPage
-  },
-  {
     path: '/login',
     name: 'FormLogin',
     component: FormLogin
@@ -40,6 +37,16 @@ const routes = [
     component: FormRegister
   },
   {
+    path: '/data',
+    name: 'DataPage',
+    component: DataPage
+  },
+  {
+    path: '/dataDate',
+    name: 'DataDatePage',
+    component: DataDatePage
+  },
+  {
     path: '/bar',
     name: 'BarChart',
     component: BarChart
@@ -48,6 +55,11 @@ const routes = [
     path: '/pie',
     name: 'PieChart',
     component: PieChart
+  },
+  {
+    path: '/line',
+    name: 'LineChart',
+    component: LineChart
   }
 ]
 
