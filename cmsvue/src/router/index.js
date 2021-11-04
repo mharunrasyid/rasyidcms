@@ -10,6 +10,7 @@ import MapPage from '../views/map/MapPage.vue'
 import BarChart from '../views/chart/BarChart.vue'
 import PieChart from '../views/chart/PieChart.vue'
 import LineChart from '../views/chart/LineChart.vue'
+import Map from '../views/chart/Map.vue'
 
 const routes = [
   {
@@ -66,6 +67,11 @@ const routes = [
     path: '/line',
     name: 'LineChart',
     component: LineChart
+  },
+  {
+    path: '/map',
+    name: 'Map',
+    component: Map
   }
 ]
 

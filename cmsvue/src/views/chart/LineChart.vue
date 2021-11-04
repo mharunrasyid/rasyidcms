@@ -32,11 +32,11 @@ export default {
             }
 
             const grouped = groupBy(data, item => {
-                return item.letter.split("-").shift()
+                return item.letter
             });
 
             let dataLength = data.map((m) => {
-                return m.letter.split("-").shift()
+                return m.letter
             })
 
             let frequencyData = []
@@ -58,7 +58,7 @@ export default {
 
             frequencyData.forEach((m) => {
                 return m.forEach(item => {
-                    letterData.push(item.letter.split("-").shift())
+                    letterData.push(item.letter)
                 })
             })
 

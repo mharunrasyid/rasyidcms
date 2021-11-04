@@ -10,7 +10,7 @@ import Chart from 'chart.js/auto';
 import { mapState } from "vuex";
 
 export default {
-    name: 'BarChart',
+    name: 'PieChart',
     computed: mapState({
         dataItem: (state) => state.data.all,
     }),
